@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Fraudulent Phone Numbers</h1>
+    <ul>
+    {% for reported_number in reported_phone_numbers %}
+        <li>
+            {{ reported_number.phone_number }}
+            {% with report_count=reported_number.reportedphonenumber_set.count %}
+                {% if report_count > 0 %}
+                    (Reported {{ report_count }} times)
+                {% endif %}
+            {% endwith %}
+        </li>
+    {% empty %}
+        <li>There are no reported phone numbers.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

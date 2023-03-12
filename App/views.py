@@ -10,8 +10,18 @@ class FraudulentPhoneNumbersView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['reported_phone_numbers'] = ReportedPhoneNumber.objects.all()
+
+        reported_phone_numbers = ReportedPhoneNumber.objects.all()
+
+        for reported_phone_number in reported_phone_numbers:
+            reported_phone_number.report_count = reported_phone_number.reports.count()
+
+
+
+        context['reported_phone_numbers'] = reported_phone_numbers
+
         return context
+
 
 
 class PhoneNumberSearchView(TemplateView):
@@ -26,7 +36,7 @@ class PhoneNumberSearchView(TemplateView):
         form = PhoneNumberSearchForm(request.POST)
         if form.is_valid():
             phone_number = form.cleaned_data['phone_number']
-            queryset = ReportedPhoneNumber.objects.filter(phone_number=phone_number)
+            queryset = ReportedPhoneNumber.objects.filter(phone_number__icontains=phone_number)
             context = {'form': form, 'queryset': queryset}
             return render(request, self.template_name, context)
         else:

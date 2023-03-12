@@ -9,3 +9,7 @@ class ReportedPhoneNumber(models.Model):
 
     def __str__(self):
         return self.phone_number
+
+class Report(models.Model):
+    reported_phone_number = models.ForeignKey(ReportedPhoneNumber, on_delete=models.CASCADE, related_name='reports')
+

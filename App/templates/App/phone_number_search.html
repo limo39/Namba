@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Search for a Phone Number</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Search</button>
-    </form>
-    {% if queryset %}
-        <h2>Results:</h2>
-        <ul>
-        {% for reported_number in queryset %}
-            <li>{{ reported_number.phone_number }}</li>
-        {% empty %}
-            <li>No matching phone numbers found.</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+  <h1 class="heading">Search for a Phone Number</h1>
+  <form class="form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Search</button>
+  </form>
+  {% if queryset %}
+    <h2 class="subheading">Results:</h2>
+    <ul class="results-list", align="center">
+      {% for reported_number in queryset %}
+        <li>+254{{ reported_number.phone_number }}</li>
+      {% empty %}
+        <li>No matching phone numbers found.</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}

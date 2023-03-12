@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Fraudulent Phone Numbers</h1>
-    <ul>
-    {% for reported_number in reported_phone_numbers %}
-        <li>
-            {{ reported_number.phone_number }}
-            {% with report_count=reported_number.reportedphonenumber_set.count %}
-                {% if report_count > 0 %}
-                    (Reported {{ report_count }} times)
-                {% endif %}
-            {% endwith %}
-        </li>
-    {% empty %}
-        <li>There are no reported phone numbers.</li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Fraudulent Phone Numbers</h1>
+        <ul class="list-group">
+            {% for reported_number in reported_phone_numbers %}
+                <li class="list-group-item">
+                   +254{{ reported_number.phone_number }} - Added On {{ reported_number.report_date|date:"F j, Y" }}
+                    {% with report_count=reported_number.report_count %} 
+                        {% if report_count > 0 %}Count
+                            <span class="badge badge-danger ml-2">Reported {{ report_count }} times</span>
+                        {% endif %}
+                    {% endwith %}
+                </li>
+            {% empty %}
+                <li class="list-group-item">There are no reported phone numbers.</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

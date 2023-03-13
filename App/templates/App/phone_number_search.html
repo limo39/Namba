@@ -4,6 +4,13 @@
   <h1 class="heading">Search for a Phone Number</h1>
   <form class="form" method="post">
     {% csrf_token %}
+    {% if form.errors %}
+      <ul class="errorlist">
+        {% for error in form.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     {{ form.as_p }}
     <button class="button" type="submit">Search</button>
   </form>

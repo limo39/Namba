@@ -2,15 +2,16 @@ from django import forms
 from .models import ReportedPhoneNumber
 
 class PhoneNumberSearchForm(forms.Form):
-    phone_number = forms.IntegerField(max_value=999999999, widget=forms.TextInput(attrs={'placeholder': 'Format 712345678 or 112345678'}))
+    phone_number = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'placeholder': 'Format 712345678 or 112345678'}))
 
     def cleaned_phone_number(self):
-        phone_number = self.cleaned_data['phone_number']
-        if not isinstance(phone_number, int):
+        phone_number = self.clean_data['phone_number']
+        if not phone_number.isdigit():
             raise forms.ValidationError('Enter a valid phone number')
         if not ReportedPhoneNumber.objects.filter(phone_number=phone_number).exists():
             raise forms.ValidationError('Number not found')
         return phone_number
+
 
 class AddPhoneNumberForm(forms.Form):
     phone_number = forms.CharField(min_length=9,max_length=9, widget=forms.TextInput(attrs={'placeholder': 'Format 712345678 or 112345678'}))

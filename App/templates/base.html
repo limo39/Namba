@@ -3,50 +3,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <title>{% block title %}Fraudulent Phone Numbers{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <style>
+        /* Custom styles */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+        .navbar-brand img {
+            margin-top: -15px;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .page-footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 10px;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            margin-top: auto;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <a href="{% url 'fraudulent_phone_numbers' %}">
-            <img src="{% static 'images/logo.jpg' %}" alt="Logo" width="60" height="60" style="display: inline-block; margin-right: 10px;">
-            <h2 style="display: inline-block; margin: 0; padding: 10px 0;">FRAUDULENT PHONE NUMBERS TRACKER</h2>
-
-        </a>
-        <nav>
-            <ul>
-                <li><a href="{% url 'fraudulent_phone_numbers' %}">Home</a></li>
-                <li><a href="{% url 'phone_number_search' %}">Search for a Phone Number</a></li>
-                <li><a href="{% url 'add_phone_number' %}">Add a Fraudulent Phone Number</a></li>
-                <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
-                <li ><button id="dark-mode-btn">Dark Mode</button></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h3>FRAUDULENT PHONE NUMBERS TRACKER</h3>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="{% url 'fraudulent_phone_numbers' %}" class="btn btn-light">Fraudulent Phone Numbers</a>
+                    <a href="{% url 'phone_number_search' %}" class="btn btn-light">Search for a Phone Number</a>
+                    <a href="{% url 'add_phone_number' %}" class="btn btn-light">Add a Fraudlent Phone Number</a>
+                    <a href="{% url 'contact_us' %}" class="btn btn-light">Contact Us</a>
+                </div>
+            </div>
+        </div>
     </header>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
     <main>
-        {% block content %}
-        {% endblock %}
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
     <footer>
-        &copy; 2023 Namba One
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>&copy; 2023 Namba One</p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="#!" class="btn btn-light"><i class="material-icons left">facebook</i>Facebook</a>
+                        <a href="#!" class="btn btn-light"><i class="material-icons left">twitter</i>Twitter</a>
+                        <a href="#!" class="btn btn-light"><i class="material-icons left">instagram</i>Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </footer>
-</body>
-
-</script>
-</html>
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems, options);
+        });
+    </script>
+</body

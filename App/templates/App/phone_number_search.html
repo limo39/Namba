@@ -1,20 +1,82 @@
 {% extends 'base.html' %}
 
+{% block title %}Search Phone Number{% endblock %}
+
 {% block content %}
-  <h1 class="heading">Search for a Phone Number</h1>
-  <form class="form" method="post">
+
+  <style>
+    /* Styling for form */
+    form {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 5px;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+    /* Styling for input fields */
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    /* Styling for submit button */
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+    /* Styling for search results */
+    .results {
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    h2 {
+      margin-top: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+  </style>
+  <h1>Search for a Phone Number</h1>
+  <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="button" type="submit">Search</button>
+    <button type="submit">Search</button>
   </form>
-  {% if queryset %}
-    <h2 class="subheading">Results:</h2>
-    <ul class="results-list", align="center">
-      {% for reported_number in queryset %}
-        <li>+254{{ reported_number.phone_number }}</li>
-      {% empty %}
-        <li>No matching phone numbers found.</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+{% if queryset %}
+<div class="results">
+<h2>Results:</h2>
+<ul>
+{% for reported_number in queryset %}
+<li>{{ reported_number.phone_number }}</li>
+{% empty %}
+<li>No matching phone numbers found.</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
 {% endblock %}

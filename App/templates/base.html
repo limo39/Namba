@@ -49,14 +49,24 @@
                     <h3>FRAUDULENT PHONE NUMBERS TRACKER</h3>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{% url 'fraudulent_phone_numbers' %}" class="btn btn-light">Fraudulent Phone Numbers</a>
+                    <a href="{% url 'fraudulent_phone_numbers' %}" class="btn btn-light">Home</a>
                     <a href="{% url 'phone_number_search' %}" class="btn btn-light">Search for a Phone Number</a>
                     <a href="{% url 'add_phone_number' %}" class="btn btn-light">Add a Fraudlent Phone Number</a>
                     <a href="{% url 'contact_us' %}" class="btn btn-light">Contact Us</a>
+                    <a href="{% url 'terms_and_conditions' %}" class="btn btn-light">Terms & Conditions</a>
                 </div>
             </div>
         </div>
     </header>
+    <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
     <main>
         <div class="container">
             {% block content %}
@@ -71,9 +81,9 @@
                         <p>&copy; 2023 Namba One</p>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <a href="#!" class="btn btn-light"><i class="material-icons left">facebook</i>Facebook</a>
-                        <a href="#!" class="btn btn-light"><i class="material-icons left">twitter</i>Twitter</a>
-                        <a href="#!" class="btn btn-light"><i class="material-icons left">instagram</i>Instagram</a>
+                        <a href="#" class="btn btn-light"><i class="material-icons left">facebook</i>Facebook</a>
+                        <a href="#" class="btn btn-light"><i class="material-icons left">twitter</i>Twitter</a>
+                        <a href="#" class="btn btn-light"><i class="material-icons left">instagram</i>Instagram</a>
                     </div>
                 </div>
             </div>

@@ -28,21 +28,20 @@ class FraudulentPhoneNumbersView(TemplateView):
 class PhoneNumberSearchView(TemplateView):
     template_name = 'app/phone_number_search.html'
 
-    def get(self, request, *args, **kwargs):
-        form = PhoneNumberSearchForm()
-        context = {'form': form}
-        return render(request, self.template_name, context)
-
     def post(self, request, *args, **kwargs):
         form = PhoneNumberSearchForm(request.POST)
         if form.is_valid():
             phone_number = form.cleaned_data['phone_number']
             queryset = ReportedPhoneNumber.objects.filter(phone_number__icontains=phone_number)
-            context = {'form': form, 'queryset': queryset}
+            if not queryset.exists():
+                message = f"No results found for phone number {phone_number}"
+                context = {'form': form, 'message': message}
+            else:
+                context = {'form': form, 'queryset': queryset}
             return render(request, self.template_name, context)
         else:
             context = {'form': form}
-            return render(request, self.template_name, context)
+        return render(request, self.template_name, context)
 
 
 
@@ -59,19 +58,20 @@ class AddPhoneNumberView(View):
         if form.is_valid():
             phone_number = form.cleaned_data['phone_number']
             reported_phone_number, created = ReportedPhoneNumber.objects.get_or_create(phone_number=phone_number)
-            if created:
-                reported_phone_number.report_count = 1
-                reported_phone_number.save()
-            else:
-                if reported_phone_number.reported_by.filter(id=request.user.id).exists():
+            if not created:
+                reported_phone_number = ReportedPhoneNumber.objects.get(phone_number=phone_number)
+                if reported_phone_number.reported_phone_number_count > 0:
                     # User has already reported this phone number
                     form.add_error('phone_number', 'You have already reported this phone number.')
                     context = {'form': form}
                     return render(request, self.template_name, context)
                 else:
-                    reported_phone_number.report_count += 1
-                    reported_phone_number.reported_by.add(request.user)
+                    reported_phone_number.reported_phone_number_count += 1
                     reported_phone_number.save()
+            else:
+                reported_phone_number.report_phone_number_count = 1
+                reported_phone_number.save()
+
             return redirect('fraudulent_phone_numbers')
         else:
             context = {'form': form}
@@ -93,3 +93,6 @@ class ContactUs(TemplateView):
         else:
             context = {'form': form}
             return render(request, self.template_name, context)
+
+class TermsAndConditionsView(TemplateView):
+    template_name = 'app/terms_and_conditions.html'

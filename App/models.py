@@ -2,9 +2,11 @@ from django.db import models
 
 
 class ReportedPhoneNumber(models.Model):
+    id = models.AutoField(primary_key=True)
     phone_number = models.CharField(max_length=20)
     report_date = models.DateField(auto_now_add=True)
     reported_phone_number_count = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.phone_number
